@@ -244,6 +244,51 @@ h3.vol-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weigh
 .wd-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);white-space:nowrap;font-weight:400}
 .wd-line{flex:1;height:1px;background:linear-gradient(to right,rgba(91,155,213,.3),transparent)}
 
+/* ── CERTIFICATIONS ── */
+.cert-scroll{
+  display:flex;gap:1.25rem;overflow-x:auto;padding:.5rem .25rem 1.5rem;
+  scroll-snap-type:x proximity;
+  scrollbar-width:thin;scrollbar-color:var(--caramel) transparent;
+}
+.cert-scroll::-webkit-scrollbar{height:6px}
+.cert-scroll::-webkit-scrollbar-track{background:transparent}
+.cert-scroll::-webkit-scrollbar-thumb{background:var(--caramel);border-radius:10px}
+.cert-card{
+  flex:0 0 220px;scroll-snap-align:start;cursor:pointer;
+  background:var(--pale);border-radius:20px;border:1px solid rgba(91,155,213,.2);
+  overflow:hidden;transition:transform .25s,box-shadow .25s;
+}
+.cert-card:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(76,112,144,.16)}
+.cert-thumb{
+  width:100%;height:140px;
+  background:linear-gradient(135deg,var(--cream) 0%,var(--sand) 100%);
+  overflow:hidden;position:relative;
+}
+.cert-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.cert-card:hover .cert-thumb img{transform:scale(1.07)}
+.cert-thumb::after{
+  content:'🔍';position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;background:rgba(27,42,61,.4);
+  opacity:0;transition:opacity .25s;
+}
+.cert-card:hover .cert-thumb::after{opacity:1}
+.cert-info{padding:.95rem 1.1rem 1.1rem}
+.cert-issuer{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.3rem}
+.cert-name{font-family:'Cormorant Garamond',serif;font-size:1.02rem;font-weight:500;color:var(--ink);line-height:1.25;margin-bottom:.2rem}
+.cert-year{font-size:.68rem;color:var(--clay);font-weight:300}
+
+/* cert lightbox extras */
+.cert-lb-info{
+  margin-top:1.1rem;max-width:480px;text-align:left;
+  background:rgba(247,251,254,.06);border:1px solid rgba(207,228,247,.15);
+  border-radius:16px;padding:1.1rem 1.3rem;
+}
+.cert-lb-issuer{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--caramel);font-weight:600;margin-bottom:.35rem}
+.cert-lb-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--pale);font-weight:500;margin-bottom:.3rem}
+.cert-lb-year{font-size:.72rem;color:rgba(207,228,247,.55);margin-bottom:.65rem}
+.cert-lb-desc{font-size:.82rem;color:rgba(233,243,252,.75);line-height:1.65;font-weight:300}
+
 /* hidden for filter */
 .proj-card.hidden,.vol-card.hidden{display:none}
 
@@ -285,18 +330,18 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
   backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity .3s;
-  padding:2rem;
+  padding:2rem;overflow-y:auto;
 }
 .lightbox.open{opacity:1;pointer-events:all}
 .lb-img-wrap{
   position:relative;
   max-width:min(900px,90vw);
-  max-height:90vh;
+  margin:auto;
   animation:lbIn .3s ease;
   display:flex;flex-direction:column;align-items:center;
 }
 .lb-img-wrap img{
-  max-width:100%;max-height:82vh;
+  max-width:100%;max-height:70vh;
   width:auto;height:auto;
   border-radius:16px;display:block;
   box-shadow:0 32px 80px rgba(0,0,0,.4);
@@ -307,32 +352,29 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
   font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(207,228,247,.65);
 }
 .lb-close{
-  position:absolute;top:-16px;right:-16px;
+  position:fixed;top:1.5rem;right:1.5rem;
   width:40px;height:40px;border-radius:50%;
   background:var(--pale);color:var(--ink);border:none;cursor:pointer;
   font-size:1.1rem;display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 16px rgba(0,0,0,.2);transition:background .2s,transform .2s;
+  z-index:10;
 }
 .lb-close:hover{background:var(--cream);transform:scale(1.1)}
 .lb-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);
+  position:fixed;top:50%;transform:translateY(-50%);
   width:44px;height:44px;border-radius:50%;
   background:rgba(247,251,254,.15);color:var(--pale);border:1.5px solid rgba(207,228,247,.3);
   cursor:pointer;font-size:1.4rem;display:flex;align-items:center;justify-content:center;
-  transition:background .2s,transform .2s;z-index:2;
+  transition:background .2s,transform .2s;z-index:10;
   backdrop-filter:blur(6px);
 }
 .lb-arrow:hover{background:rgba(207,228,247,.25)}
-.lb-prev{left:-60px}
-.lb-next{right:-60px}
+.lb-prev{left:1.5rem}
+.lb-next{right:1.5rem}
 .lb-arrow.hide{display:none}
 .lb-dots{display:flex;gap:.5rem;justify-content:center;margin-top:.85rem}
 .lb-dot{width:8px;height:8px;border-radius:50%;background:rgba(207,228,247,.3);cursor:pointer;transition:background .2s,transform .2s}
 .lb-dot.active{background:var(--caramel);transform:scale(1.2)}
-@media(max-width:700px){
-  .lb-prev{left:4px}
-  .lb-next{right:4px}
-}
 @keyframes lbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 
 /* REVEAL */
@@ -371,6 +413,12 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
     <button class="lb-arrow lb-next" onclick="lbNav(1,event)">›</button>
     <div class="lb-caption" id="lb-cap"></div>
     <div class="lb-dots" id="lb-dots"></div>
+    <div class="cert-lb-info" id="cert-lb-info" style="display:none">
+      <div class="cert-lb-issuer" id="cert-lb-issuer"></div>
+      <div class="cert-lb-name" id="cert-lb-name"></div>
+      <div class="cert-lb-year" id="cert-lb-year"></div>
+      <div class="cert-lb-desc" id="cert-lb-desc"></div>
+    </div>
   </div>
 </div>
 
@@ -402,7 +450,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
     <div class="hero-text">
       <div class="eyebrow rl"><span class="eyebrow-dot"></span>Student · Data Science · Builder</div>
       <h1 class="hero-name r d1"><strong>Syakira</strong><br>Lathifa <em>Awliya</em></h1>
-      <p class="hero-tagline r d2">President University, Bekasi</p>
+      <p class="hero-tagline r d2">President University — Semester 5, Bekasi</p>
       <p class="hero-desc r d3">I build data-driven applications — from ML prediction systems and ERP platforms to Android apps. Drawn to how data, systems, and products fit together.</p>
       <div class="hero-btns r d4">
         <a href="#work" class="btn-fill">See My Work</a>
@@ -441,7 +489,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
         <div class="af"><div class="af-lbl">Scholarship</div><div class="af-val">Jababeka Scholarship</div></div>
       </div>
       <div class="about-text r d2">
-        <p>I'm a undergraduate student who enjoys building things that actually work — from end-to-end web applications to mobile apps and data pipelines.</p>
+        <p>I'm a fifth-semester student who enjoys building things that actually work — from end-to-end web applications to mobile apps and data pipelines.</p>
         <p>My projects tend to involve <strong>machine learning</strong>, <strong>data analysis</strong>, and <strong>backend systems</strong>. I care about how the whole thing comes together as a product, not just the technical parts in isolation.</p>
         <p>Outside of coding, I've been involved in event organizing, volunteering, and student community work — which has taught me as much about communication and teamwork as any course has.</p>
       </div>
@@ -495,7 +543,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
           <span class="proj-badge badge-project">Project · 2026</span>
         </div>
         <div class="proj-body">
-          <div class="proj-period">Generative AI Course</div>
+          <div class="proj-period">Generative AI Course · Semester 5</div>
           <h3 class="proj-title">Customer Analytics Dashboard</h3>
           <div class="proj-org">AI-Powered Business Intelligence</div>
           <div class="psi">
@@ -524,7 +572,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
           <span class="proj-badge badge-project">Project · 2026</span>
         </div>
         <div class="proj-body">
-          <div class="proj-period">Data Science</div>
+          <div class="proj-period">Data Science · Semester 5</div>
           <h3 class="proj-title">Customer Retention Prediction</h3>
           <div class="proj-org">Django Web App + ETL Pipeline</div>
           <div class="psi">
@@ -578,7 +626,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
       <!-- CARD 4 — Univents -->
       <div class="proj-card r d2" data-type="project">
         <div class="proj-img" onclick="openLb(this)" data-title="Univents — Campus Event App">
-          <img src="3.png" alt="Univents">
+          <img src="univents.png" alt="Univents">
           <span class="proj-badge badge-project">Project · 2024</span>
         </div>
         <div class="proj-body">
@@ -642,6 +690,116 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
       </div>
 
     </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="work-divider r">
+      <span class="wd-label">Certifications</span>
+      <div class="wd-line"></div>
+    </div>
+
+    <div class="cert-scroll r">
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="sertif digiaksi.jpeg"
+        data-issuer="DIGIAKSI Social Project — President University"
+        data-name="Treasurer"
+        data-year="2025"
+        data-desc="Managed the full budget for DIGIAKSI, a digital literacy initiative running three programs, DigiLearn (an e-commerce seminar), DigiCation (gamified education sessions), and DigiThrift (a donation-based thrift program), serving 56 participants. Tracked income and spending across all three programs and made sure funds were allocated correctly for each activity. For DigiThrift specifically, built a digital inventory system from scratch using Google Sheets to log and track over 200 donated items, covering what came in, what was sold or distributed, and keeping records organized for the team.">
+        <div class="cert-thumb"><img src="sertif digiaksi.jpeg" alt="DIGIAKSI Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">DIGIAKSI</div>
+          <div class="cert-name">Treasurer</div>
+          <div class="cert-year">2025</div>
+        </div>
+      </div>
+
+        <div class="cert-card" onclick="openCertLb(this)"
+        data-img="sertif zm.jpeg"
+        data-issuer="Zahirul Ma'ala — President University"
+        data-name="Member of Human Resources"
+        data-year="2024 – 2025"
+        data-desc="As an HR division member of Zahirul Ma'ala from November 2024 to July 2025, designed and ran internal programs aimed at member development, including activities meant to keep members engaged and connected to the organization's goals throughout the period. Also handled internal communication across divisions, making sure announcements, schedules, and coordination between teams reached everyone consistently instead of getting lost between groups. The role involved a lot of behind-the-scenes coordination, following up with division heads, organizing internal updates, and helping new members settle into the organization's workflow.">
+        <div class="cert-thumb"><img src="sertif zm.jpeg" alt="ZM HR Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">ZM President University</div>
+          <div class="cert-name">Human Resources Member</div>
+          <div class="cert-year">2024 – 2025</div>
+        </div>
+      </div>
+
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="serif compgal.png"
+        data-issuer="PUFA Computer Science — President University"
+        data-name="Scoring Team Member, CompSciGala 2025"
+        data-year="2025"
+        data-desc="Part of the scoring team for CompSciGala 2025, a student tech competition organized by PUFA Computer Science. Sat through competition rounds tracking and recording participant scores in real time, double-checking entries against the judging criteria to avoid mistakes, and keeping scoring data organized in Google Sheets so results could be verified and announced without delays. Coordinated closely with other scoring members to make sure every team's score was consistent and accounted for before results went out.">
+        <div class="cert-thumb"><img src="serif compgal.png" alt="CompSciGala Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">CompSciGala 2025</div>
+          <div class="cert-name">Scoring Team Member</div>
+          <div class="cert-year">2025</div>
+        </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="Syakira Lathifa - Pandas.png"
+        data-issuer="Kaggle"
+        data-name="Pandas"
+        data-year="2026"
+        data-desc="Worked through Kaggle's hands-on Pandas course, writing actual code to create and manipulate dataframes, indexing and selecting specific rows/columns, filtering data based on conditions, grouping and aggregating values, sorting datasets, and cleaning up missing or messy data. This is the same toolkit used across the ETL pipelines and data analysis work in the Customer Retention and Customer Analytics Dashboard projects."
+        data-link="">
+        <div class="cert-thumb"><img src="Syakira Lathifa - Pandas.png" alt="Kaggle Pandas Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">Kaggle</div>
+          <div class="cert-name">Pandas</div>
+          <div class="cert-year">2026</div>
+        </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="sertif google analytics.png"
+        data-issuer="Google"
+        data-name="Google Analytics Certification"
+        data-year="2026"
+        data-desc="Learned how to set up and read Google Analytics reports, tracking where website visitors come from, what pages they spend time on, where they drop off, and how to turn that traffic data into decisions about what to change on a site. Covered setting up tracking properties, building custom reports, and interpreting engagement metrics rather than just glancing at surface-level numbers.">
+        <div class="cert-thumb"><img src="sertif google analytics.png" alt="Google Analytics Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">Google</div>
+          <div class="cert-name">Analytics Certification</div>
+          <div class="cert-year">2026</div>
+        </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="sertif python.png"
+        data-issuer="HackerRank"
+        data-name="Python (Basic)"
+        data-year="2026"
+        data-desc="Sat through HackerRank's timed Python assessment, solving problems on the spot covering data types, loops and conditionals, writing and calling functions, and working with lists, dictionaries, and other basic data structures. The test format meant working through logic under time pressure, not just recognizing syntax.">
+        <div class="cert-thumb"><img src="sertif python.png" alt="HackerRank Python Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">HackerRank</div>
+          <div class="cert-name">Python (Basic)</div>
+          <div class="cert-year">2026</div>
+        </div>
+      </div>
+
+      <div class="cert-card" onclick="openCertLb(this)"
+        data-img="sertif sql.png"
+        data-issuer="HackerRank"
+        data-name="SQL (Basic)"
+        data-year="2026"
+        data-desc="Sat through HackerRank's timed SQL assessment, writing queries to select and filter data, join multiple tables together, and run basic aggregation functions like counting, summing, and averaging. Directly applicable to the database querying done across the Customer Retention and Analytics Dashboard projects, both built on PostgreSQL/SQLite.">
+        <div class="cert-thumb"><img src="sertif sql.png" alt="HackerRank SQL Certificate"></div>
+        <div class="cert-info">
+          <div class="cert-issuer">HackerRank</div>
+          <div class="cert-name">SQL (Basic)</div>
+          <div class="cert-year">2026</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -662,6 +820,7 @@ footer p{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var
           <div class="edu-detail">Cikarang, Bekasi</div>
           <div class="edu-badges">
             <span class="edu-badge">🎓 Jababeka Scholarship</span>
+            <span class="edu-badge">Semester 5 · Active</span>
           </div>
         </div>
       </div>
@@ -699,6 +858,21 @@ window.addEventListener('load',()=>{
   document.querySelectorAll('#hero .r,#hero .rl,#hero .rr').forEach((el,i)=>setTimeout(()=>el.classList.add('v'),80+i*120))
 })
 
+// cert lightbox
+function openCertLb(el){
+  lbImages=[el.dataset.img]
+  lbIndex=0
+  document.getElementById('lb-cap').textContent=''
+  renderLb()
+  document.getElementById('cert-lb-issuer').textContent=el.dataset.issuer||''
+  document.getElementById('cert-lb-name').textContent=el.dataset.name||''
+  document.getElementById('cert-lb-year').textContent=el.dataset.year||''
+  document.getElementById('cert-lb-desc').textContent=el.dataset.desc||''
+  document.getElementById('cert-lb-info').style.display='block'
+  document.getElementById('lb').classList.add('open')
+  document.body.style.overflow='hidden'
+}
+
 // lightbox
 let lbImages=[]
 let lbIndex=0
@@ -709,6 +883,7 @@ function openLb(el){
   lbImages = imgsAttr ? imgsAttr.split(',').map(s=>s.trim()) : [img.src]
   lbIndex=0
   document.getElementById('lb-cap').textContent=el.dataset.title||''
+  document.getElementById('cert-lb-info').style.display='none'
   renderLb()
   document.getElementById('lb').classList.add('open')
   document.body.style.overflow='hidden'
